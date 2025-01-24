@@ -1,0 +1,36 @@
+.wrapperSearchBox {
+    margin: 20px;
+}
+
+.formSearchBox {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    gap: 15px;
+    border: 1px solid black;
+    border-radius: 5px;
+    box-shadow: 2px 2px 4px 4px grey;
+    padding: 20px;
+    background-color: white;
+    margin: 0 auto;
+    width: 400px;
+}
+
+.labelSearchBox {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: start;
+}
+
+.inputSearchBox {
+    padding: 8px 20px;
+    height: 32px;
+    border-radius: 6px;
+    border: 1px solid grey;
+    transition: all 300ms ease;
+}
+
+.inputSearchBox:focus {
+    outline: none;
+}

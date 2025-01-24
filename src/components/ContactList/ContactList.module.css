@@ -1,0 +1,13 @@
+.wrapperListItem {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.contactListItem {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+    margin: 20px;
+}
