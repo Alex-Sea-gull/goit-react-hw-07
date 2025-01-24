@@ -3,11 +3,17 @@ import Contact from "../Contact/Contact";
 import s from "./ContactList.module.css";
 import { deleteContact, selectContacts } from "../../redux/contactsSlice";
 import { filterContacts } from "../../redux/filtersSlice";
+import { useEffect } from "react";
+import { fetchData } from "../../redux/contactsOps";
 
 const ContactList = () => {
   const dispatch = useDispatch();
   const contacts = useSelector(selectContacts);
   const filter = useSelector(filterContacts);
+
+  useEffect(() => {
+    dispatch(fetchData());
+  }, [dispatch]);
 
   const handleDelete = (id) => {
     dispatch(deleteContact(id));

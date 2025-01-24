@@ -1,12 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit"
+import { fetchData } from "./contactsOps";
 
 // Масив для зберігання контактів
 const initialState = {
-    contacts: {
-        items: [],
-        loading: false,
-        error: null
-    },
+    items: [],
+    loading: false,
+    error: null
 }
 
 
@@ -16,22 +15,38 @@ const contactSlice = createSlice({
     initialState,
     reducers: {
         addContact(state, action) {
-            state.contacts.items.push(action.payload)
+            state.items.push(action.payload)
         },
         deleteContact(state, action) {
-            state.contacts.items = state.contacts.items.filter(contact => contact.id !== action.payload);
+            state.items = state.items.filter((contact) => contact.id !== action.payload);
         },
 
 
         setLoading(state, action) {
-            state.contacts.loading = action.payload
+            state.loading = action.payload
         },
         setError(state, action) {
-            state.contacts.error = action.payload
+            state.error = action.payload
         },
         fetchContacts(state, action) {
-            state.contacts.items = action.payload
+            state.items = action.payload
         },
+    },
+    extraReducers: (builder) => {
+        builder.addCase(fetchData.fulfilled, (state, action) => {
+            console.log("Дані збережені:", action.payload);
+            state.items = action.payload;
+            state.loading = false;
+        })
+            .addCase(fetchData.rejected, (state, action) => {
+                console.error("Помилка при завантаженні:", action.payload);
+                state.error = action.payload;
+                state.loading = false;
+            })
+            .addCase(fetchData.pending, (state, action) => {
+                state.error = null;
+                state.loading = false;
+            })
     }
 })
 
@@ -41,3 +56,5 @@ export const contactsReducer = contactSlice.reducer
 
 //Selector
 export const selectContacts = (state) => state.contacts.items;
+export const selectLoading = (state) => state.contacts.loading;
+export const selectError = (state) => state.contacts.error;
