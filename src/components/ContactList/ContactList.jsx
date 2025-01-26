@@ -1,22 +1,23 @@
 import { useDispatch, useSelector } from "react-redux";
 import Contact from "../Contact/Contact";
 import s from "./ContactList.module.css";
-import { selectContacts } from "../../redux/contactsSlice";
-import { filterContacts } from "../../redux/filtersSlice";
+import { selectFilteredContacts } from "../../redux/contactsSlice";
+// import { filterContacts } from "../../redux/filtersSlice";
 import { deleteContactThunk } from "../../redux/contactsOps";
 
 const ContactList = () => {
-  const contacts = useSelector(selectContacts);
-  const filter = useSelector(filterContacts);
+  // const contacts = useSelector(selectContacts);
+  // const filter = useSelector(filterContacts);
+  const filteredContacts = useSelector(selectFilteredContacts);
   const dispatch = useDispatch();
 
   const handleDelete = (id) => {
     dispatch(deleteContactThunk(id));
   };
 
-  const filteredContacts = contacts.filter((contact) =>
-    contact.name.toLowerCase().includes(filter.toLowerCase())
-  );
+  // const filteredContacts = contacts.filter((contact) =>
+  //   contact.name.toLowerCase().includes(filter.toLowerCase())
+  // );
 
   return (
     <div className={s.wrapperListItem}>
