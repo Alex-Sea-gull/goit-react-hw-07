@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit"
-import { fetchData } from "./contactsOps";
+import { fetchData, deleteContact } from "./contactsOps";
 
 // Масив для зберігання контактів
 const initialState = {
@@ -13,30 +13,12 @@ const initialState = {
 const contactSlice = createSlice({
     name: "contacts",
     initialState,
-    reducers: {
-        addContact(state, action) {
-            state.items.push(action.payload)
-        },
-        deleteContact(state, action) {
-            state.items = state.items.filter((contact) => contact.id !== action.payload);
-        },
-
-
-        setLoading(state, action) {
-            state.loading = action.payload
-        },
-        setError(state, action) {
-            state.error = action.payload
-        },
-        fetchContacts(state, action) {
-            state.items = action.payload
-        },
-    },
     extraReducers: (builder) => {
         builder.addCase(fetchData.fulfilled, (state, action) => {
             console.log("Дані збережені:", action.payload);
             state.items = action.payload;
             state.loading = false;
+            state.error = null;
         })
             .addCase(fetchData.rejected, (state, action) => {
                 console.error("Помилка при завантаженні:", action.payload);
@@ -45,13 +27,16 @@ const contactSlice = createSlice({
             })
             .addCase(fetchData.pending, (state, action) => {
                 state.error = null;
-                state.loading = false;
+                state.loading = true;
+            })
+            .addCase(deleteContact.fulfilled, (state, action) => {
+                state.items = state.items.filter(item => item.id !== action.payload.id)
             })
     }
 })
 
 
-export const { addContact, deleteContact, setLoading, setError, fetchContacts } = contactSlice.actions
+export const { addContact, setLoading, setError, fetchContacts } = contactSlice.actions
 export const contactsReducer = contactSlice.reducer
 
 //Selector

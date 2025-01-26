@@ -14,3 +14,17 @@ export const fetchData = createAsyncThunk("contacts/fetchData", async (_, thunkA
         return thunkApi.rejectWithValue(error.message)
     }
 });
+
+export const deleteContact = createAsyncThunk("contacts/deleteContact", async (id, thunkApi) => {
+    try {
+        const { data } = await axios.delete(`/contacts/${id}`);
+        return data
+    } catch (error) {
+        console.error("Помилка при запиті:", error.message);
+        return thunkApi.rejectWithValue(error.message)
+    }
+});
+
+
+
+// Зворотні кавички ALT 96
