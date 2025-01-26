@@ -3,7 +3,7 @@ import Contact from "../Contact/Contact";
 import s from "./ContactList.module.css";
 import { selectContacts } from "../../redux/contactsSlice";
 import { filterContacts } from "../../redux/filtersSlice";
-import { deleteContact } from "../../redux/contactsOps";
+import { deleteContactThunk } from "../../redux/contactsOps";
 
 const ContactList = () => {
   const contacts = useSelector(selectContacts);
@@ -11,7 +11,7 @@ const ContactList = () => {
   const dispatch = useDispatch();
 
   const handleDelete = (id) => {
-    dispatch(deleteContact(id));
+    dispatch(deleteContactThunk(id));
   };
 
   const filteredContacts = contacts.filter((contact) =>

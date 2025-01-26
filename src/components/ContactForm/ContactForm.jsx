@@ -3,17 +3,14 @@ import * as Yup from "yup";
 import s from "./ContactForm.module.css";
 import CustomField from "../CustomField/CustomField";
 import { useDispatch } from "react-redux";
-import { addContact } from "../../redux/contactsSlice";
+import { addContactThunk } from "../../redux/contactsOps";
 
 const ContactForm = () => {
   const dispatch = useDispatch();
 
   const handleSubmit = (values, actions) => {
-    // console.log("Form submitted with values:", values);
-
     dispatch(
-      addContact({
-        id: crypto.randomUUID(),
+      addContactThunk({
         name: values.username,
         number: values.usernumber,
       })

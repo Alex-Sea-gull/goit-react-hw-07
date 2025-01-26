@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit"
-import { fetchData, deleteContact } from "./contactsOps";
+import { addContactThunk, deleteContactThunk, fetchDataThunk } from "./contactsOps";
 
 // Масив для зберігання контактів
 const initialState = {
@@ -14,23 +14,28 @@ const contactSlice = createSlice({
     name: "contacts",
     initialState,
     extraReducers: (builder) => {
-        builder.addCase(fetchData.fulfilled, (state, action) => {
+        builder.addCase(fetchDataThunk.fulfilled, (state, action) => {
             console.log("Дані збережені:", action.payload);
             state.items = action.payload;
             state.loading = false;
             state.error = null;
         })
-            .addCase(fetchData.rejected, (state, action) => {
+            .addCase(fetchDataThunk.rejected, (state, action) => {
                 console.error("Помилка при завантаженні:", action.payload);
                 state.error = action.payload;
                 state.loading = false;
             })
-            .addCase(fetchData.pending, (state, action) => {
+            .addCase(fetchDataThunk.pending, (state, action) => {
                 state.error = null;
                 state.loading = true;
             })
-            .addCase(deleteContact.fulfilled, (state, action) => {
+            .addCase(deleteContactThunk.fulfilled, (state, action) => {
+                console.log("Запис видалено:", action.payload);
                 state.items = state.items.filter(item => item.id !== action.payload.id)
+            })
+            .addCase(addContactThunk.fulfilled, (state, action) => {
+                console.log("Контакт додано:", action.payload);
+                state.items = [...state.items, action.payload];
             })
     }
 })

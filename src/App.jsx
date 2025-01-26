@@ -4,7 +4,7 @@ import SearchBox from "./components/SearchBox/SearchBox";
 import ContactList from "./components/ContactList/ContactList";
 
 import { useDispatch, useSelector } from "react-redux";
-import { fetchData } from "./redux/contactsOps";
+import { fetchDataThunk } from "./redux/contactsOps";
 import { selectError, selectLoading } from "./redux/contactsSlice";
 
 function App() {
@@ -14,7 +14,7 @@ function App() {
   const isLoading = useSelector(selectLoading);
 
   useEffect(() => {
-    dispatch(fetchData());
+    dispatch(fetchDataThunk());
   }, [dispatch]);
 
   return (
